@@ -1,0 +1,5 @@
+Genome
+STAR aligner
+Multiqc
+samtools
+featureCounts/HTSeq
