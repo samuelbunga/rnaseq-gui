@@ -2,9 +2,15 @@
 
 inDir=$1;
 outDir=$2;
+stage=$3;
 
-for samples in $inDir*gz
-do
-	echo $samples;
-done
+mkdir -p $outDir;
+
+if [[ $stage == 'fastq' ]]
+then
+	for samples in $inDir*gz
+	do
+		fastqc $samples -o $outDir;
+	done
+fi
 

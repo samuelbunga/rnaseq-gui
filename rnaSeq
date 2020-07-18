@@ -17,5 +17,5 @@ if __name__ == "__main__":
     species = ARGS.species
 
     # Run MultiQC on the FASTQ files
-    os.system("runMultiQc.sh")
+    os.system("runMultiQc.sh "+inDir+" "+outDir+" fastq")
 
