@@ -1,6 +1,21 @@
 #!/usr/bin/env python3
-
-import agrparse
+from rna import my_io
 import re
+import os
+
 
 if __name__ == "__main__":
+    # setup paths
+    os.system("setupPath")
+
+    # Check the input from user provided arguments
+    ARGS = my_io.get_args()
+
+    # Assign variables
+    inDir = ARGS.indir
+    outDir = ARGS.outdir
+    species = ARGS.species
+
+    # Run MultiQC on the FASTQ files
+    os.system("runMultiQc.sh")
+
