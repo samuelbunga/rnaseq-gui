@@ -8,9 +8,11 @@ mkdir -p $outDir;
 
 if [[ $stage == 'fastq' ]]
 then
+	mkdir -p $outDir/fastq-report;
 	for samples in $inDir*gz
 	do
-		fastqc $samples -o $outDir;
+		fastqc $samples -o $outDir/fastq-report;
 	done
+	multiqc $outDir -o $outDir/fastq-report/multiqc-report;
 fi
 
