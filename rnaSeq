@@ -5,8 +5,6 @@ import os
 
 
 if __name__ == "__main__":
-    # setup paths
-    os.system("setupPath")
 
     # Check the input from user provided arguments
     ARGS = my_io.get_args()
@@ -15,7 +13,22 @@ if __name__ == "__main__":
     inDir = ARGS.indir
     outDir = ARGS.outdir
     species = ARGS.species
+    layout = ARGS.layout
 
-    # Run MultiQC on the FASTQ files
-    os.system("runMultiQc.sh "+inDir+" "+outDir+" fastq")
+    # Run MultiQC on the raw FASTQ files
+    #os.system("runMultiQc.sh "+inDir+" "+outDir+" raw-fastq "+layout)
+    
+    # Trim the low quality reads and adapter sequences
+    #os.system("trimAllReads.sh "+inDir+" "+outDir+" "+layout)
+    
+    # Run MultiQC on the trimmed FASTQ files
+    #os.system("runMultiQc.sh "+inDir+" "+outDir+" trimmed-fastq "+layout)
 
+    # Align reads to reference genome
+    #os.system("alignReads.sh "+outDir+" "+species+" "+layout)
+	
+	# Run MultiQC on aligned reads
+    #os.system("runMultiQc.sh "+inDir+" "+outDir+" aligned-fastq "+layout)
+	
+    # Assign genes to the reads	
+    os.system("countGenes.sh "+outDir+" "+species+" "+layout)
