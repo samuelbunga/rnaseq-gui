@@ -19,6 +19,9 @@ def get_args():
 	PARSER.add_argument('-q', '--qualified_quality_phred', dest='qualifiedPhred', help='the quality value that a base is qualified. Default 15 means phred quality >=Q15 is qualified.', metavar='\b', required=False)
 	PARSER.add_argument('-e', '--average_qual', dest='averageQual', help='if one reads average quality score <avg_qual,'
 	'then this read/pair is discarded. Default 0 means no requirement (int [=0])', metavar='\b', required=False)
+	PARSER.add_argument('-s', '--strandness', dest='strandness', help='Perform strand-specific read counting.'
+	' 0 (unstranded), 1 (stranded) and 2 (reversely stranded). Default is 0', required=False, metavar='\b', type=int)
+	
 	ARGS = PARSER.parse_args()
 	return ARGS
 

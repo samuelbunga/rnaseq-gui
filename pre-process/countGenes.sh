@@ -14,6 +14,12 @@ genomeDir="/mnt/d/BCH/RNA-Seq/Genome"
 outDir=$1
 species=$2
 layout=$3
+strandness=$4
+
+if [[ $strandness == 'None' ]]
+then
+	$strandness = 0
+fi
 
 mkdir -p $outDir/featureCountsMatrix
 checkSpecies $species
@@ -22,7 +28,8 @@ cd $outDir/BAM
 if [[ $layout == 'SE' ]]
 then
 	featureCounts -F GTF -g gene_name -a $gtfLocation \
-	-o $outDir/featureCountsMatrix/counts.featureCounts.txt *bam -T 4
+	-o $outDir/featureCountsMatrix/counts.featureCounts.txt *bam -T 4 \
+	-s $strandness
 	
 	multiqc $outDir/featureCountsMatrix -o $outDir/featureCounts-report
 	
@@ -42,7 +49,8 @@ then
 		samtools index $bamFiles\_sorted.bam
 	done
     featureCounts -F GTF -g gene_name -a $gtfLocation \
-	-o $outDir/featureCountsMatrix/counts.featureCounts.txt *sorted.bam -T 4
+	-o $outDir/featureCountsMatrix/counts.featureCounts.txt *sorted.bam -T 4 \
+	-s $strandness
 	
 	multiqc $outDir/featureCountsMatrix -o $outDir/featureCounts-report
 	cut -f1,7,8,9,10,11,12 $outDir/featureCountsMatrix/*featureCounts.txt >\

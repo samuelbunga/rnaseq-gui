@@ -14,15 +14,16 @@ if __name__ == "__main__":
     outDir = ARGS.outdir
     species = ARGS.species
     layout = ARGS.layout
-
+    strandness = ARGS.strandness
+	
     # Run MultiQC on the raw FASTQ files
-    #os.system("runMultiQc.sh "+inDir+" "+outDir+" raw-fastq "+layout)
+    os.system("runMultiQc.sh "+inDir+" "+outDir+" raw-fastq "+layout)
     
     # Trim the low quality reads and adapter sequences
-    #os.system("trimAllReads.sh "+inDir+" "+outDir+" "+layout)
+    os.system("trimAllReads.sh "+inDir+" "+outDir+" "+layout)
     
     # Run MultiQC on the trimmed FASTQ files
-    #os.system("runMultiQc.sh "+inDir+" "+outDir+" trimmed-fastq "+layout)
+    os.system("runMultiQc.sh "+inDir+" "+outDir+" trimmed-fastq "+layout)
 
     # Align reads to reference genome
     #os.system("alignReads.sh "+outDir+" "+species+" "+layout)
@@ -31,4 +32,4 @@ if __name__ == "__main__":
     #os.system("runMultiQc.sh "+inDir+" "+outDir+" aligned-fastq "+layout)
 	
     # Assign genes to the reads	
-    os.system("countGenes.sh "+outDir+" "+species+" "+layout)
+    #os.system("countGenes.sh "+outDir+" "+species+" "+layout)
