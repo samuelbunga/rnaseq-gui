@@ -2,6 +2,7 @@ import re
 import os
 import tkinter as tk
 from tkinter import font
+from tkinter import Label
 from tkinter import messagebox
 from tkinter import filedialog
 
@@ -12,6 +13,7 @@ class set_gui:
         self.root = tk.Tk()
         self.root.title('rnaseq')
         self.root.resizable(width=False, height=False)
+        self.root.geometry('550x360')  # width x height
         self.bg_color = '#d8d8d8'
         self.btn_width = 12
         self.x_padding = (10, 5)
@@ -34,6 +36,14 @@ class set_gui:
     def select_button(self):
         select_folder = filedialog.askdirectory(initialdir='.')
         return select_folder
+
+    def set_labels(self, text, row, col, sticky):
+        # label for selected folder
+        select_label = Label(self.main_frame, textvariable=text, bg=self.bg_color, font=self.fonts)
+        select_label.grid(row=row, column=col, columnspan=5, sticky=sticky, padx=self.x_padding)
+
+    def quit(self):
+        self.root.quit()
 
     def run_frame(self):
         # pack main frame
