@@ -1,9 +1,3 @@
-import re
-import os
-import tkinter as tk
-from tkinter import font
-from tkinter import messagebox
-from tkinter import filedialog
 from gui.main_frame import set_gui
 
 if __name__ == "__main__":
@@ -29,23 +23,28 @@ if __name__ == "__main__":
     # set library types
     frame.set_options(type='Library type',
                       options=['Paired-end', 'Single-end'],
-                      row=3, col=1, sticky='W')
+                      row=4, col=1, sticky='W')
 
     # set aligner
     frame.set_options(type='Aligner to use',
                       options=['STAR', 'salmon'],
-                      row=5, col=1, sticky='W')
+                      row=6, col=1, sticky='W')
 
     # set gtf location
     frame.set_buttons(text='Select GTF',
                       button='gtf',
                       cmd=frame.select_button,
                       font='Ariel',
-                      row=7, col=1, sticky='W',
+                      row=9, col=1, sticky='W',
                       labels={'button': 'gtf', 'row': 7, 'col': 2, 'sticky': 'W'})
 
+    # set aligner
+    frame.set_options(type='Strand specificity',
+                      options=['Un-stranded', 'Stranded', 'Reversely stranded'],
+                      row=10, col=1, sticky='W')
+
     # set resume option
-    frame.check_button(row=8, col=1, sticky='W', )
+    frame.check_button(row=12, col=1, sticky='W', )
 
     # start pipeline
     frame.set_buttons(text='Start analysis',
@@ -62,4 +61,5 @@ if __name__ == "__main__":
                       font='Ariel',
                       row=25, col=2, sticky='W',
                       labels={'button': 'quit', 'row': 9, 'col': 2, 'sticky': 'E'})
+    frame.set_progress_bar(row=28, col=1, sticky='W')
     frame.run_frame()

@@ -6,7 +6,9 @@ from tkinter import Label
 from tkinter import StringVar
 from tkinter import OptionMenu
 from tkinter import messagebox
+from tkinter.ttk import Style
 from tkinter import filedialog
+from tkinter.ttk import Progressbar
 
 
 class set_gui:
@@ -15,12 +17,13 @@ class set_gui:
         self.root = tk.Tk()
         self.root.title('rnaseq')
         self.root.resizable(width=False, height=False)
-        self.root.geometry('550x550')  # width x height
+        self.root.geometry('550x420')  # width x height
         self.bg_color = '#d8d8d8'
         self.btn_width = 12
         self.x_padding = (25, 0)
         self.y_padding = (5, 10)
         self.fonts = font.Font(root=self.root, family='Ariel', size=14, weight='bold')
+        self.progress = ''
         self.button = ''
         self.all_buttons = {}
         self.all_labels = {}
@@ -29,6 +32,26 @@ class set_gui:
         # Initiate the main frame
         self.main_frame = tk.Frame(self.root, bg=self.bg_color,
                                    padx=1, pady=10)
+
+    def set_progress_bar(self, row, col, sticky):
+        s = Style()
+        s.theme_use('clam')
+        s.configure("neon.Horizontal.TProgressbar", foreground='#39FF14', background='#39FF14')
+        progress = Progressbar(self.main_frame,
+                               style="neon.Horizontal.TProgressbar",
+                               orient='horizontal',
+                               length=540,
+                               maximum=100,
+                               cursor='coffee_mug',
+                               mode='determinate',
+                               )
+        progress.grid(row=row, column=col, columnspan=10, sticky=sticky, pady=(15, 0))
+        progress['value'] = 10
+        self.root.update_idletasks()
+
+    def progress_bar(self):
+        self.progress['value'] = 20
+        self.root.update_idletasks()
 
     def set_buttons(self, text, button, cmd,
                     font, row, col, sticky, labels):
