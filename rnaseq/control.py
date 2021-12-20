@@ -3,6 +3,7 @@ from gui.main_frame import set_gui
 if __name__ == "__main__":
     # initiate gui
     frame = set_gui()
+    frame.set_img()
 
     # set input path to fastq files
     frame.set_buttons(text='Fastq files',

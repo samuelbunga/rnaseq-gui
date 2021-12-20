@@ -8,6 +8,7 @@ from tkinter import OptionMenu
 from tkinter import messagebox
 from tkinter.ttk import Style
 from tkinter import filedialog
+from PIL import ImageTk, Image
 from tkinter.ttk import Progressbar
 
 
@@ -17,7 +18,7 @@ class set_gui:
         self.root = tk.Tk()
         self.root.title('rnaseq')
         self.root.resizable(width=False, height=False)
-        self.root.geometry('550x420')  # width x height
+        self.root.geometry('550x450')  # width x height
         self.bg_color = '#d8d8d8'
         self.btn_width = 12
         self.x_padding = (25, 0)
@@ -25,6 +26,7 @@ class set_gui:
         self.fonts = font.Font(root=self.root, family='Ariel', size=14, weight='bold')
         self.progress = ''
         self.button = ''
+        self.img = ''
         self.all_buttons = {}
         self.all_labels = {}
         self.opts = {}
@@ -32,6 +34,15 @@ class set_gui:
         # Initiate the main frame
         self.main_frame = tk.Frame(self.root, bg=self.bg_color,
                                    padx=1, pady=10)
+
+    def set_img(self):
+        img_file = os.path.join(os.path.realpath(os.path.dirname(__file__)), os.path.pardir, os.path.pardir,
+                                'img', 'dna.png')
+
+        img = Image.open(img_file)
+        img = img.resize((50, 50), Image.ANTIALIAS)
+        self.img = ImageTk.PhotoImage(img)
+        Label(self.main_frame, image=self.img).grid(row=1, column=10, columnspan=1, sticky='E')
 
     def set_progress_bar(self, row, col, sticky):
         s = Style()
@@ -90,7 +101,7 @@ class set_gui:
         self.button = rel_mapping[onclick]
         if self.button in self.all_buttons:
             self.all_buttons[self.button] = os.path.realpath(select_folder)
-            self.all_labels[self.button][0].set(select_folder)
+            self.all_labels[self.button][0].set(select_folder[0:35]+'...')
 
     def check_button(self, row, col, sticky):
         label = Label(self.main_frame, text='Resume analysis',
@@ -115,9 +126,9 @@ class set_gui:
 
             label_obj.grid(row=labels_dict['row'],
                            column=labels_dict['col'],
-                           columnspan=3,
+                           columnspan=1,
                            sticky=labels_dict['sticky'],
-                           padx=self.x_padding)
+                           )
             self.all_labels[self.button] = (label, label_obj)
 
     def start(self, labels):
