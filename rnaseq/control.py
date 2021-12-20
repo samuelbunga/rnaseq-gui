@@ -44,6 +44,9 @@ if __name__ == "__main__":
                       row=7, col=1, sticky='W',
                       labels={'button': 'gtf', 'row': 7, 'col': 2, 'sticky': 'W'})
 
+    # set resume option
+    frame.check_button(row=8, col=1, sticky='W', )
+
     # start pipeline
     frame.set_buttons(text='Start analysis',
                       button='start',

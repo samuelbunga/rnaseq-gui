@@ -20,11 +20,12 @@ class set_gui:
         self.btn_width = 12
         self.x_padding = (25, 0)
         self.y_padding = (5, 10)
-        self.fonts = font.Font(root=self.root, family='Arial', size=14, weight='bold')
+        self.fonts = font.Font(root=self.root, family='Ariel', size=14, weight='bold')
         self.button = ''
         self.all_buttons = {}
         self.all_labels = {}
         self.opts = {}
+        self.chk_btn = tk.IntVar()
         # Initiate the main frame
         self.main_frame = tk.Frame(self.root, bg=self.bg_color,
                                    padx=1, pady=10)
@@ -68,6 +69,18 @@ class set_gui:
             self.all_buttons[self.button] = os.path.realpath(select_folder)
             self.all_labels[self.button][0].set(select_folder)
 
+    def check_button(self, row, col, sticky):
+        label = Label(self.main_frame, text='Resume analysis',
+                      bg=self.bg_color, font=self.fonts)
+        label.grid(row=row, column=col, columnspan=1, sticky=sticky)
+        c1 = tk.Checkbutton(self.main_frame, text='Yes', onvalue=0, offvalue=1,
+                            variable=self.chk_btn)
+        c2 = tk.Checkbutton(self.main_frame, text='No', onvalue=1, offvalue=0,
+                            variable=self.chk_btn)
+
+        c1.grid(row=row+1, column=col, sticky='W')
+        c2.grid(row=row+1, column=col, sticky='W', padx=(55))
+
     def _initiate_label(self, labels_dict):
         if self.button not in self.all_labels:
             label = StringVar()
@@ -88,6 +101,7 @@ class set_gui:
         print(self.opts['Library type'].get())
         print(self.opts['Aligner to use'].get())
         print(self.all_buttons)
+        print(self.chk_btn.get())
 
     def quit(self, labels):
         self.root.quit()
