@@ -16,7 +16,7 @@ class set_gui:
     def __init__(self):
         # initialize interface
         self.root = tk.Tk()
-        self.root.title('rnaseq')
+        self.root.title('rnaseq-gui')
         self.root.resizable(width=False, height=False)
         self.root.geometry('550x450')  # width x height
         self.bg_color = '#d8d8d8'
