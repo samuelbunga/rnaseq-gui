@@ -60,6 +60,7 @@ class set_gui:
         select_folder = filedialog.askdirectory(initialdir='.')
         rel_mapping = {'Fastq files': 'input',
                        'Output dir': 'output',
+                       'Select GTF': 'gtf',
                        'Exit': 'quit'}
 
         self.button = rel_mapping[onclick]

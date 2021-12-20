@@ -36,12 +36,20 @@ if __name__ == "__main__":
                       options=['STAR', 'salmon'],
                       row=5, col=1, sticky='W')
 
+    # set gtf location
+    frame.set_buttons(text='Select GTF',
+                      button='gtf',
+                      cmd=frame.select_button,
+                      font='Ariel',
+                      row=7, col=1, sticky='W',
+                      labels={'button': 'gtf', 'row': 7, 'col': 2, 'sticky': 'W'})
+
     # start pipeline
     frame.set_buttons(text='Start analysis',
                       button='start',
                       cmd=frame.start,
                       font='Ariel',
-                      row=8, col=1, sticky='W',
+                      row=25, col=1, sticky='W',
                       labels={'button': 'start', 'row': 8, 'col': 2, 'sticky': 'E'})
 
     # exit
@@ -49,6 +57,6 @@ if __name__ == "__main__":
                       button='quit',
                       cmd=frame.quit,
                       font='Ariel',
-                      row=8, col=2, sticky='W',
+                      row=25, col=2, sticky='W',
                       labels={'button': 'quit', 'row': 9, 'col': 2, 'sticky': 'E'})
     frame.run_frame()
