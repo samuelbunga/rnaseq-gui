@@ -1,6 +1,5 @@
-# rnaSeq
+# rnaseq-gui 🖥 🧬
+rnaseq-gui is python based GUI tool which can perform pre-processing of bulk RNA-Seq FASTQ files to generate count matrix
 
-rnaSeq is a python build bulk-RNASeq pre-processing piplein. It can run analysis for both paired-end and single-end samples.
+<img align='center' src="./img/rnaseq-gui.png" width="400" height="300" /></img>
 
-# Note
-This project is still under development.
