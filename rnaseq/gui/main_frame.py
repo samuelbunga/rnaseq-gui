@@ -30,6 +30,7 @@ class set_gui:
         self.all_buttons = {}
         self.all_labels = {}
         self.opts = {}
+        self.all_inputs = {}
         self.chk_btn = tk.IntVar()
         # Initiate the main frame
         self.main_frame = tk.Frame(self.root, bg=self.bg_color,
@@ -57,7 +58,7 @@ class set_gui:
                                mode='determinate',
                                )
         progress.grid(row=row, column=col, columnspan=10, sticky=sticky, pady=(15, 0))
-        progress['value'] = 10
+        progress['value'] = 3
         self.root.update_idletasks()
 
     def progress_bar(self):
@@ -132,10 +133,12 @@ class set_gui:
             self.all_labels[self.button] = (label, label_obj)
 
     def start(self, labels):
-        print(self.opts['Library type'].get())
-        print(self.opts['Aligner to use'].get())
-        print(self.all_buttons)
-        print(self.chk_btn.get())
+        self.all_inputs['library_type'] = self.opts['Library type'].get()
+        self.all_inputs['aligner'] = self.opts['Aligner to use'].get()
+        self.all_inputs.update(self.all_buttons)
+        self.all_inputs['resume'] = str(self.chk_btn.get())
+        self.all_inputs['strand'] = self.opts['Strand specificity'].get()
+        print(self.all_inputs)
 
     def quit(self, labels):
         self.root.quit()

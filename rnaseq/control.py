@@ -39,7 +39,7 @@ if __name__ == "__main__":
                       row=9, col=1, sticky='W',
                       labels={'button': 'gtf', 'row': 7, 'col': 2, 'sticky': 'W'})
 
-    # set aligner
+    # set strand specificity
     frame.set_options(type='Strand specificity',
                       options=['Un-stranded', 'Stranded', 'Reversely stranded'],
                       row=10, col=1, sticky='W')
