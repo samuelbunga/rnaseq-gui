@@ -28,31 +28,35 @@ frame.set_options(type='Library type',
                   options=['Paired-end', 'Single-end'],
                   row=4, col=1, sticky='W')
 
+frame.set_options(type='Species',
+                  options=['Human', 'Mouse'],
+                  row=6, col=1, sticky='W')
+
 # set aligner
 frame.set_options(type='Aligner to use',
                   options=['STAR', 'salmon'],
-                  row=6, col=1, sticky='W')
+                  row=8, col=1, sticky='W')
 
 # set gtf location
 frame.set_buttons(text='Select GTF',
                   button='gtf',
                   cmd=frame.select_button,
                   font='Ariel',
-                  row=8, col=1, sticky='W',
+                  row=10, col=1, sticky='W',
                   labels={'button': 'gtf', 'row': 7, 'col': 2, 'sticky': 'W'})
 
 # set strand specificity
 frame.set_options(type='Strand specificity',
                   options=['Un-stranded', 'Stranded', 'Reversely stranded'],
-                  row=10, col=1, sticky='W')
+                  row=12, col=1, sticky='W')
 
 # Select adapter
 frame.set_options(type='Adapter',
                   options=['TruSeq3', 'TruSeq2'],
-                  row=12, col=1, sticky='W')
+                  row=14, col=1, sticky='W')
 
 # set resume option
-frame.check_button(row=14, col=1, sticky='W')
+frame.check_button(row=16, col=1, sticky='W')
 
 # start pipeline
 frame.set_buttons(text='Start analysis',

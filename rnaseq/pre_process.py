@@ -22,3 +22,14 @@ def trim_reads(FILES: dict):
     output_dir = FILES['output']
     os.system('sh ./bash/trim_all_reads.sh '+input_files+' '+output_dir+' '+library)
 
+def align_reads(FILES: dict):
+    genome = {
+        'Human': {'salmon': './genome/human/transcripts/index/'},
+        'Mouse': {'salmon': './genome/mouse/transcripts/index/'}
+    }
+    library = FILES['library_type']
+    input_files = FILES['input']
+    output_dir = FILES['output']
+    idx = genome[FILES['species']][FILES['aligner']]
+    if FILES['aligner'] == 'salmon':
+        os.system('sh ./bash/quant_samples.sh '+output_dir+' '+output_dir+' '+idx+' '+library)

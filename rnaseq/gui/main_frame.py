@@ -21,7 +21,7 @@ class set_gui:
         self.root = tk.Tk()
         self.root.title('rnaseq-gui')
         self.root.resizable(width=False, height=False)
-        self.root.geometry('550x505')  # width x height
+        self.root.geometry('550x540')  # width x height
         self.bg_color = '#d8d8d8'
         self.btn_width = 12
         self.x_padding = (25, 0)
@@ -142,7 +142,8 @@ class set_gui:
         self.all_inputs.update(self.all_buttons)
         self.all_inputs['resume'] = str(self.chk_btn.get())
         self.all_inputs['strand'] = self.opts['Strand specificity'].get()
-        self.all_inputs['Adapter'] = self.opts['Adapter'].get()
+        self.all_inputs['adapter'] = self.opts['Adapter'].get()
+        self.all_inputs['species'] = self.opts['Species'].get()
 
         self.all_inputs['input'] = '/Users/sbunga/gitHub/rnaSeq/rnaseq/test/data/'
         self.all_inputs['output'] = '/Users/sbunga/gitHub/rnaSeq/rnaseq/test'
@@ -174,6 +175,9 @@ class set_gui:
         time.sleep(1)
 
         # run alignment
+        align_reads(self.all_inputs)
+        self.progress_bar(100)
+        time.sleep(1)
 
     def quit(self, labels):
         self.all_buttons['quit'] = 1
