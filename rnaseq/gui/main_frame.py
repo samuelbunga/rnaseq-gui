@@ -1,5 +1,7 @@
 import re
 import os
+import sys
+import time
 import tkinter as tk
 from tkinter import font
 from tkinter import Label
@@ -10,6 +12,7 @@ from tkinter.ttk import Style
 from tkinter import filedialog
 from PIL import ImageTk, Image
 from tkinter.ttk import Progressbar
+from pre_process import *
 
 
 class set_gui:
@@ -49,21 +52,21 @@ class set_gui:
         s = Style()
         s.theme_use('clam')
         s.configure("neon.Horizontal.TProgressbar", foreground='#39FF14', background='#39FF14')
-        progress = Progressbar(self.main_frame,
-                               style="neon.Horizontal.TProgressbar",
-                               orient='horizontal',
-                               length=540,
-                               maximum=100,
-                               cursor='coffee_mug',
-                               mode='determinate',
-                               )
-        progress.grid(row=row, column=col, columnspan=10, sticky=sticky, pady=(15, 0))
-        progress['value'] = 3
+        self.progress = Progressbar(self.main_frame,
+                                    style="neon.Horizontal.TProgressbar",
+                                    orient='horizontal',
+                                    length=540,
+                                    maximum=100,
+                                    cursor='coffee_mug',
+                                    mode='determinate',
+                                    )
+        self.progress.grid(row=row, column=col, columnspan=10, sticky=sticky, pady=(15, 0))
+        self.progress['value'] = 2
         self.root.update_idletasks()
 
-    def progress_bar(self):
-        self.progress['value'] = 20
-        self.root.update_idletasks()
+    def progress_bar(self, val):
+        self.progress['value'] = val
+        self.root.update()
 
     def set_buttons(self, text, button, cmd,
                     font, row, col, sticky, labels):
@@ -89,7 +92,7 @@ class set_gui:
             self.opts[type].set(options[0])
 
         opt = OptionMenu(self.main_frame, self.opts[type], *options)
-        opt.grid(row=row+1, column=col, sticky='EW', padx=self.x_padding,
+        opt.grid(row=row + 1, column=col, sticky='EW', padx=self.x_padding,
                  pady=self.y_padding)
 
     def select_button(self, onclick):
@@ -102,7 +105,7 @@ class set_gui:
         self.button = rel_mapping[onclick]
         if self.button in self.all_buttons:
             self.all_buttons[self.button] = os.path.realpath(select_folder)
-            self.all_labels[self.button][0].set(select_folder[0:35]+'...')
+            self.all_labels[self.button][0].set(select_folder[0:35] + '...')
 
     def check_button(self, row, col, sticky):
         label = Label(self.main_frame, text='Resume analysis',
@@ -113,8 +116,8 @@ class set_gui:
         c2 = tk.Checkbutton(self.main_frame, text='No', onvalue=1, offvalue=0,
                             variable=self.chk_btn)
 
-        c1.grid(row=row+1, column=col, sticky='W')
-        c2.grid(row=row+1, column=col, sticky='W', padx=(55))
+        c1.grid(row=row + 1, column=col, sticky='W')
+        c2.grid(row=row + 1, column=col, sticky='W', padx=(55))
 
     def _initiate_label(self, labels_dict):
         if self.button not in self.all_labels:
@@ -133,14 +136,36 @@ class set_gui:
             self.all_labels[self.button] = (label, label_obj)
 
     def start(self, labels):
+        self.all_buttons['start'] = 1
         self.all_inputs['library_type'] = self.opts['Library type'].get()
         self.all_inputs['aligner'] = self.opts['Aligner to use'].get()
         self.all_inputs.update(self.all_buttons)
         self.all_inputs['resume'] = str(self.chk_btn.get())
         self.all_inputs['strand'] = self.opts['Strand specificity'].get()
-        print(self.all_inputs)
+
+        # check for inputfiles
+        if check_dir([self.all_inputs['input']]):
+            self.progress_bar(5)
+        else:
+            messagebox.showerror("Error", "Input directory doesn't exist, Please try again.")
+
+        if check_dir([self.all_inputs['output']]):
+            self.progress_bar(5)
+        else:
+            messagebox.showerror("Error", "Output directory doesn't exist, Please try again.")
+
+        # run fastqc
+        run_fastqc([self.all_inputs['input'], self.all_inputs['output']])
+        self.progress_bar(20)
+        time.sleep(1)
+
+        # run multiqc
+        run_multiqc([self.all_inputs['input'], self.all_inputs['output']])
+        self.progress_bar(35)
+        time.sleep(1)
 
     def quit(self, labels):
+        self.all_buttons['quit'] = 1
         self.root.quit()
 
     def run_frame(self):
