@@ -21,7 +21,7 @@ class set_gui:
         self.root = tk.Tk()
         self.root.title('rnaseq-gui')
         self.root.resizable(width=False, height=False)
-        self.root.geometry('550x450')  # width x height
+        self.root.geometry('550x505')  # width x height
         self.bg_color = '#d8d8d8'
         self.btn_width = 12
         self.x_padding = (25, 0)
@@ -137,11 +137,15 @@ class set_gui:
 
     def start(self, labels):
         self.all_buttons['start'] = 1
-        self.all_inputs['library_type'] = self.opts['Library type'].get()
+        self.all_inputs['library_type'] = 'PE' if self.opts['Library type'].get() == 'Paired-end' else 'SE'
         self.all_inputs['aligner'] = self.opts['Aligner to use'].get()
         self.all_inputs.update(self.all_buttons)
         self.all_inputs['resume'] = str(self.chk_btn.get())
         self.all_inputs['strand'] = self.opts['Strand specificity'].get()
+        self.all_inputs['Adapter'] = self.opts['Adapter'].get()
+
+        self.all_inputs['input'] = '/Users/sbunga/gitHub/rnaSeq/rnaseq/test/data/'
+        self.all_inputs['output'] = '/Users/sbunga/gitHub/rnaSeq/rnaseq/test'
 
         # check for inputfiles
         if check_dir([self.all_inputs['input']]):
@@ -150,19 +154,26 @@ class set_gui:
             messagebox.showerror("Error", "Input directory doesn't exist, Please try again.")
 
         if check_dir([self.all_inputs['output']]):
-            self.progress_bar(5)
+            self.progress_bar(15)
         else:
             messagebox.showerror("Error", "Output directory doesn't exist, Please try again.")
 
         # run fastqc
-        run_fastqc([self.all_inputs['input'], self.all_inputs['output']])
-        self.progress_bar(20)
+        run_fastqc(self.all_inputs)
+        self.progress_bar(30)
         time.sleep(1)
 
         # run multiqc
-        run_multiqc([self.all_inputs['input'], self.all_inputs['output']])
+        run_multiqc(self.all_inputs)
         self.progress_bar(35)
         time.sleep(1)
+        
+        # run trimmomatic
+        trim_reads(self.all_inputs)
+        self.progress_bar(60)
+        time.sleep(1)
+
+        # run alignment
 
     def quit(self, labels):
         self.all_buttons['quit'] = 1

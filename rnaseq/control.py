@@ -38,7 +38,7 @@ frame.set_buttons(text='Select GTF',
                   button='gtf',
                   cmd=frame.select_button,
                   font='Ariel',
-                  row=9, col=1, sticky='W',
+                  row=8, col=1, sticky='W',
                   labels={'button': 'gtf', 'row': 7, 'col': 2, 'sticky': 'W'})
 
 # set strand specificity
@@ -46,8 +46,13 @@ frame.set_options(type='Strand specificity',
                   options=['Un-stranded', 'Stranded', 'Reversely stranded'],
                   row=10, col=1, sticky='W')
 
+# Select adapter
+frame.set_options(type='Adapter',
+                  options=['TruSeq3', 'TruSeq2'],
+                  row=12, col=1, sticky='W')
+
 # set resume option
-frame.check_button(row=12, col=1, sticky='W', )
+frame.check_button(row=14, col=1, sticky='W')
 
 # start pipeline
 frame.set_buttons(text='Start analysis',
@@ -64,5 +69,5 @@ frame.set_buttons(text='Exit',
                   font='Ariel',
                   row=25, col=2, sticky='W',
                   labels={'button': 'quit', 'row': 9, 'col': 2, 'sticky': 'E'})
-frame.set_progress_bar(row=28, col=1, sticky='W')
+frame.set_progress_bar(row=30, col=1, sticky='W')
 frame.run_frame()

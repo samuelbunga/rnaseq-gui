@@ -8,10 +8,17 @@ def check_dir(FILES: list) -> bool:
     else:
         return False
 
-def run_multiqc(FILES: list):
-    os.system('multiqc '+FILES[0]+' -f -o '+FILES[1]+'/QC/')
+def run_multiqc(FILES: dict):
+    os.system('multiqc '+FILES['output']+'/QC/'+' -f -o '+FILES['output']+'/QC/')
 
-def run_fastqc(FILES: list):
-    if not os.path.isdir(os.path.join(FILES[1], 'QC')):
-        os.mkdir(os.path.join(FILES[1], 'QC'))
-    os.system('fastqc '+FILES[0]+'/*fastq'+' -o '+FILES[1]+'/QC/')
+def run_fastqc(FILES: dict):
+    if not os.path.isdir(os.path.join(FILES['output'], 'QC')):
+        os.mkdir(os.path.join(FILES['output'], 'QC'))
+    os.system('fastqc '+FILES['input']+'/*gz'+' -o '+FILES['output']+'/QC/')
+
+def trim_reads(FILES: dict):
+    library = FILES['library_type']
+    input_files = FILES['input']
+    output_dir = FILES['output']
+    os.system('sh ./bash/trim_all_reads.sh '+input_files+' '+output_dir+' '+library)
+
